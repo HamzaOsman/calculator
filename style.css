@@ -7,9 +7,11 @@ body {
 }
 
 #calculator {
-    margin: 0 auto;
+    margin: 50px auto;
     background-color: rgb(95, 95, 95);
-    width: 50%;
+    border: 10px solid black;
+    border-radius: 20px;
+    width: 400px;
     height: auto;
 }
 
@@ -24,7 +26,6 @@ body {
     display: grid;
     grid-gap: 10px;
     grid-template-columns: repeat(5, 1fr);
-    margin: 5px;
 }
 
 #keypad button {
@@ -35,9 +36,18 @@ body {
 #equals{
     grid-column: 5/6;
     grid-row: 3/5;
+    background-color: sandybrown;
 }
 
 #clear {
     grid-column: 4/6;
+    background-color: rgb(224, 0, 0);
 }
 
+.operator {
+    background-color: skyblue;
+}
+
+#zero {
+    grid-column: 1/4;  
+}
