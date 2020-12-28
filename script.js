@@ -1,110 +1,78 @@
-let a = "";
-let b = "";
-let displayNum = "";
-let operation = "";
-const numbers = document.querySelectorAll(".number");
-const display = document.querySelector("#display");
-const operators = document.querySelectorAll(".operator");
-const equalsS = document.querySelector("#equals");
-const clear = document.querySelector("#clear");
+let prev = "0";
+let operator = "";
+let display = "";
 
-document.addEventListener("keydown", () => {
-    if (event.key >= 0 && event.key <= 9) {
-        updateDisplay(event.key)
-    } else if (event.key === "+" || event.key === "-" ||
-        event.key === "*" || event.key === "/") {
-        a = displayNum;
-        displayNum = "";
-        operation = event.key;
-    } else if (event.keyCode === 13 || event.key === "=") {
-        equals();
-    } else if (event.keyCode == 8 || event.keyCode == 46) {
-        reset();
-        display.innerHTML = 0;
+function initialiseHandlers() {
+    let keys = document.querySelectorAll(".key");
+
+    for(let i = 0; i < keys.length; i++) {
+        keys[i].addEventListener('click', () => {
+            updateDisplay(keys[i].textContent);
+        })
     }
-})
-
-//EVENT LISTENERS
-numbers.forEach(number => {
-    number.addEventListener("click", () => {
-        updateDisplay(number.innerHTML);
-    });
-});
-
-operators.forEach(operator => {
-    operator.addEventListener("click", () => {
-        a = displayNum;
-        displayNum = "";
-        operation = operator.innerHTML;
-    })
-})
-
-equalsS.addEventListener("click", () => {
-    equals()
-});
-
-clear.addEventListener("click", () => {
-    reset();
-    display.innerHTML = 0;
-});
-
-//Operations
-function add(a, b) {
-    return parseInt(a) + parseInt(b);
 }
 
-function subtract(a, b) {
-    return a - b;
-}
 
-function multiply(a, b) {
-    return a * b;
-}
+function updateDisplay(input) {
+    console.log("PREV:" + prev, " OPERATor:" + operator, " DISPLAY:" + display);
+    let displayDiv = document.getElementById("display");
 
-function divide(a, b) {
-    return a / b;
-}
-
-function operate(operator, a, b) {
-    if (operator === "+") {
-        return add(a, b);
-    } else if (operator === "-") {
-        return subtract(a, b);
-    } else if (operator === "*") {
-        return multiply(a, b);
-    } else if (operator === "/") {
-        return divide(a, b);
+    if(!isNaN(input)) {
+        display = display.concat(input);
+        displayDiv.innerText = display;
+        return;
     }
 
-}
+    let operators = ["+", "-", "*", "/"];
 
-function updateDisplay(nextDigit) {
-    console.log("UPDATING")
-    displayNum += nextDigit;
-    display.innerHTML = parseInt(displayNum);
-}
-
-function reset() {
-    console.log("RESET")
-    a = "";
-    b = "";
-    displayNum = "";
-}
-
-function equals() {
-    console.log(a + "   " + displayNum)
-    if (a === "" || displayNum === "") {
-        display.innerHTML = "ERROR"
-        reset();
-        return
+    if(operators.includes(input)) {
+        prev = displayDiv.innerText;
+        operator = input;
+        display = "";
+        return;
     }
 
-    b = displayNum;
-    console.log(a + " " + b + "  " + operation)
-    displayNum = operate(operation, a, b);
-    console.log(displayNum)
-    display.innerHTML = parseInt(displayNum);
-    console.log(display.innerHTML);
+    if(input === "C") {
+        display = "";
+        displayDiv.innerText = "0";
+        return;
+    }
 
-    reset()
+    if(input === "=") {
+        if(display === "") {
+            displayDiv.innerText = "MissingOperand";
+            prev = "0";
+            operator = "";
+            display = "";
+            return;
+        }   
+
+        let operand1 = parseInt(prev);
+        let operand2 = parseInt(display);
+        
+        switch(operator) {
+            case "+":
+                display = operand1 + operand2;
+                break;
+            case "-":
+                display = operand1 - operand2;
+                break;
+            case "*":
+                display = operand1 * operand2;
+                break;
+            case "/":
+                display = operand1 / operand2;
+                break;
+            default:
+        }
+
+        displayDiv.innerText = display;
+
+        prev = "0";
+        operator = "";
+        display = "";
+    }
 }
+
+
+initialiseHandlers();

@@ -20,6 +20,7 @@ body {
     font-size: 60px;
     text-align: right;
     padding: 20px 20px 5px 20px;
+    word-wrap: break-word;
 }
 
 #keypad {
