@@ -14,7 +14,6 @@ function initialiseHandlers() {
 
 
 function updateDisplay(input) {
-    console.log("PREV:" + prev, " OPERATor:" + operator, " DISPLAY:" + display);
     let displayDiv = document.getElementById("display");
 
     if(!isNaN(input)) {
