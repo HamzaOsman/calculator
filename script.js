@@ -14,7 +14,6 @@ function initialiseHandlers() {
 
 
 function updateDisplay(input) {
-    console.log("PREV:" + prev, " OPERATor:" + operator, " DISPLAY:" + display);
     let displayDiv = document.getElementById("display");
 
     if(!isNaN(input)) {
@@ -47,8 +46,8 @@ function updateDisplay(input) {
             return;
         }   
 
-        let operand1 = parseInt(prev);
-        let operand2 = parseInt(display);
+        let operand1 = parseFloat(prev);
+        let operand2 = parseFloat(display);
         
         switch(operator) {
             case "+":
